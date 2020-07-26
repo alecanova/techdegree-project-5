@@ -1,7 +1,8 @@
 //------------------
-// Global variables
+// Select global variables
 //------------------
 const gallery = document.getElementById('gallery');
+const searchContainer = document.querySelector('.search-container');
 const userCardArr = [];
 
 //---------------
@@ -16,6 +17,81 @@ function fetchData(url) {
         .catch(error => console.log('Looks like there was a problem', error))
 
 }
+
+//------------------
+// Create search bar
+//------------------
+
+const createSearchBar = () => {
+
+    const form = document.createElement('form');
+    form.id = 'search-form';
+
+    const input = document.createElement('input');
+	input.setAttribute('type', 'search');
+    input.setAttribute('id', 'search-input');
+    input.setAttribute('class', 'search-input');
+    
+	input.placeholder = 'Search...';
+    form.appendChild(input);
+    
+    const searchBtn = document.createElement('button');
+    searchBtn.setAttribute('type', 'search');
+    searchBtn.setAttribute('class', 'search-submit');
+    
+	searchBtn.textContent = 'search';
+    form.appendChild(searchBtn);
+    
+    searchContainer.appendChild(form);
+
+    // Adding a submit event to the 'search' button.
+    searchBtn.addEventListener('submit', event => {
+
+        event.preventDefault();
+        searchResult();
+
+    });
+
+    // Adding a keyup event to the search input.
+    input.addEventListener('keyup', event => {
+
+        event.preventDefault();
+        searchResult();
+
+    });
+
+}
+
+//--------------------
+// Show search results
+//--------------------
+
+const searchResult = () => {
+
+    const cards = document.querySelectorAll('.card');
+    const name = document.getElementById('search-input').value.toLowerCase();
+
+        cards.forEach(card => {
+
+            const cardName = card
+            .getElementsByClassName("card-name")[0]
+            .innerHTML.toLowerCase(); 
+
+                if(cardName.includes(name) ) {
+
+                    card.style.display = '';
+
+                } else {
+
+                    card.style.display = 'none';
+
+                 }
+
+         });
+
+}
+
+
 
 //------------------------
 // Generate User Card HTML
@@ -51,7 +127,7 @@ const generateCard = (users) => {
             
     })
 
-        // Insert event click to open modal here
+    // Insert event click to open modal 
     const cards = document.querySelectorAll('.card');
 
         for (let i = 0; i < cards.length; i++) {
@@ -73,6 +149,7 @@ const generateCard = (users) => {
 //------------------
 // Show Modal Window
 //------------------
+
 const generateModalWindow = (users, index) => {
 
     const user = users[index];
@@ -116,7 +193,7 @@ const generateModalWindow = (users, index) => {
 
 }
 
-
+createSearchBar();
 
 
 //-----------
