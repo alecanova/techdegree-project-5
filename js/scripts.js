@@ -24,27 +24,29 @@ function fetchData(url) {
 
 const createSearchBar = () => {
 
+    // Create the form element
     const form = document.createElement('form');
     form.id = 'search-form';
 
+    // Create the input element
     const input = document.createElement('input');
 	input.setAttribute('type', 'search');
     input.setAttribute('id', 'search-input');
     input.setAttribute('class', 'search-input');
+    input.placeholder = 'Search...';
     
-	input.placeholder = 'Search...';
     form.appendChild(input);
-    
+
+    // Create the search button
     const searchBtn = document.createElement('button');
     searchBtn.setAttribute('type', 'search');
     searchBtn.setAttribute('class', 'search-submit');
-    
 	searchBtn.textContent = 'search';
     form.appendChild(searchBtn);
     
     searchContainer.appendChild(form);
 
-    // Adding a submit event to the 'search' button.
+    // Add a submit event to the 'search' button.
     searchBtn.addEventListener('submit', event => {
 
         event.preventDefault();
@@ -52,7 +54,7 @@ const createSearchBar = () => {
 
     });
 
-    // Adding a keyup event to the search input.
+    // Add a keyup event to the search input.
     input.addEventListener('keyup', event => {
 
         event.preventDefault();
@@ -66,6 +68,7 @@ const createSearchBar = () => {
 // Show search results
 //--------------------
 
+// Filter the directory by employee name
 const searchResult = () => {
 
     const cards = document.querySelectorAll('.card');
@@ -74,14 +77,14 @@ const searchResult = () => {
         cards.forEach(card => {
 
             const cardName = card
-            .getElementsByClassName("card-name")[0]
+            .getElementsByClassName('card-name')[0]
             .innerHTML.toLowerCase(); 
 
                 if(cardName.includes(name) ) {
 
                     card.style.display = '';
-
-                } else {
+                   
+                } else  {
 
                     card.style.display = 'none';
 
@@ -127,7 +130,7 @@ const generateCard = (users) => {
             
     })
 
-    // Insert event click to open modal 
+    // Click event on every card to open the modal window 
     const cards = document.querySelectorAll('.card');
 
         for (let i = 0; i < cards.length; i++) {
@@ -157,6 +160,7 @@ const generateModalWindow = (users, index) => {
         const modalContainer = document.createElement('div');
         modalContainer.classList.add('modal-container');
 
+        // format the birthday to a local data 
         const birthday = new Date(user.dob.date);
 
         modalContainer.innerHTML = `
@@ -175,12 +179,18 @@ const generateModalWindow = (users, index) => {
                 <p class="modal-text">Birthday: ${birthday.toLocaleDateString()}</p>
             </div>
         </div>
+
+        <div class="modal-btn-container">
+            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+            <button type="button" id="modal-next" class="modal-next btn">Next</button>
+        </div>
         
         `;
 
         document.body.insertBefore(modalContainer, document.querySelector('script'));
 
     const modalCloseBtn = document.getElementById('modal-close-btn');
+
     modalContainer.addEventListener('click', event => {
 
         if(event.target === modalCloseBtn || modalCloseBtn.contains(event.target)) {
@@ -191,8 +201,54 @@ const generateModalWindow = (users, index) => {
 
     })
 
+    //Toggle back and forth between employees when the modal window is open.
+
+    const modalBtn = document.querySelector('.modal-btn-container');
+    const nextBtn = document.getElementById('modal-next');
+    const prevBtn = document.getElementById('modal-prev');
+
+    if (user === users[0]) {
+
+        modalContainer.classList.add('first');
+
+    } else if (user === users[11]) {
+
+        modalContainer.classList.add('last');
+
+    }
+
+
+    modalBtn.addEventListener('click', event => {
+
+        if(event.target === nextBtn) {
+
+            modalContainer.remove();
+            generateModalWindow(users, index + 1);
+
+        } else if(event.target === prevBtn) {
+
+            modalContainer.remove();
+            generateModalWindow(users, index - 1);
+        }
+
+    })
+
+    // Remove prev-button when the first modal is showing,
+    // Remove next-button when the last modal is showing.
+
+    if(modalContainer.classList.contains('first')) {
+
+        prevBtn.remove();
+
+    } else if(modalContainer.classList.contains('last')) {
+
+        nextBtn.remove();
+
+    }
+
 }
 
+// Call the createSearchBar function
 createSearchBar();
 
 
