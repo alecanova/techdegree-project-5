@@ -64,6 +64,7 @@ const createSearchBar = () => {
 
 }
 
+
 //--------------------
 // Show search results
 //--------------------
@@ -93,13 +94,6 @@ const searchResult = () => {
          });
 
 }
-
-//--------------
-// Show message
-//--------------
-
-
-
 
 
 //------------------------
@@ -265,7 +259,7 @@ createSearchBar();
 fetchData('https://randomuser.me/api/?results=12&nat=au,ca,gb,nl,nz,us')
 
     .then(data => generateCard(data))
-    //.catch(error => )
+    .catch(error => console.error(error) )
 
 
     
