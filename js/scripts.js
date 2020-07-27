@@ -94,6 +94,12 @@ const searchResult = () => {
 
 }
 
+//--------------
+// Show message
+//--------------
+
+
+
 
 
 //------------------------
@@ -191,6 +197,7 @@ const generateModalWindow = (users, index) => {
 
     const modalCloseBtn = document.getElementById('modal-close-btn');
 
+    // Close the modal window
     modalContainer.addEventListener('click', event => {
 
         if(event.target === modalCloseBtn || modalCloseBtn.contains(event.target)) {
@@ -257,11 +264,8 @@ createSearchBar();
 //-----------
 fetchData('https://randomuser.me/api/?results=12&nat=au,ca,gb,nl,nz,us')
 
-    .then(data => {
-
-        generateCard(data);
-
-    })
+    .then(data => generateCard(data))
+    //.catch(error => )
 
 
     
