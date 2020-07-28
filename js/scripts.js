@@ -175,7 +175,8 @@ const generateModalWindow = (users, index) => {
                 <hr>
                 <p class="modal-text">${user.cell}</p>
                 <p class="modal-text">${user.location.street.number} ${user.location.street.name}
-                ${user.location.city}, ${user.location.state}, ${user.nat}</p>
+                ${user.location.city}, ${user.location.state}, ${user.nat} 
+                ${user.location.postcode}</p>
                 <p class="modal-text">Birthday: ${birthday.toLocaleDateString()}</p>
             </div>
         </div>
